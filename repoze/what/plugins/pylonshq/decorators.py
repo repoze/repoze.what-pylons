@@ -14,7 +14,11 @@
 ##############################################################################
 
 """
-Utilities to use :mod:`repoze.what` v1 in a Pylons or TurboGears 2 application.
+Decorators to control access to controllers and controller actions in a
+Pylons or TurboGears 2 application.
+
+All these utilities are also available in the 
+:mod:`repoze.what.plugins.pylonshq` namespace.
 
 """
 

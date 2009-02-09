@@ -15,6 +15,6 @@ independent project. Much of the initial functionality has been taken from
 the `TurboGears v2.0 project <http://turbogears.org/2.0/>`_.
 
 * Adapted the TurboGears' ``@require`` decorator and turned into
-  :class:`repoze.what.plugins.pylonshq.ActionProtectionDecorator`.
+  :class:`repoze.what.plugins.pylonshq.decorators.ActionProtectionDecorator`.
 * Introduced the class decorator for controller-wide authorization
-  :class:`repoze.what.plugins.pylonshq.ControllerProtectionDecorator`.
+  :class:`repoze.what.plugins.pylonshq.decorators.ControllerProtectionDecorator`.

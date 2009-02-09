@@ -43,7 +43,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General substitutions.
-project = u'repoze.what plugin for Pylons/TG2 integration'
+project = u'repoze.what utilities for Pylons applications'
 copyright = u'2009, The Repoze Project'
 
 # The default replacements for |version| and |release|, also used in various
@@ -166,7 +166,7 @@ htmlhelp_basename = 'repozewhatpylonsdoc'
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
   ('index', 'repozewhatpylons.tex',
-   u'repoze.what in Pylons/TG2 Documentation',
+   u'repoze.what utilities for Pylons Documentation',
    u'Gustavo Narea', 'manual'),
 ]
 
@@ -188,7 +188,7 @@ latex_documents = [
 #latex_use_modindex = True
 
 intersphinx_mapping = {
-    'http://static.repoze.org/whatdocs/': None,
-    'http://turbogears.org/2.0/docs/': None,
+    #'http://turbogears.org/2.0/docs/': None,
     'http://www.pylonshq.com/docs/en/0.9.7/': None,
+    'http://static.repoze.org/whatdocs/': None,
     }

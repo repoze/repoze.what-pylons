@@ -26,42 +26,56 @@ from pylons import request, response
 from pylons.controllers.util import abort
 from repoze.what.predicates import NotAuthorizedError
 
-__all__ = ['ActionProtectionDecorator', 'ControllerProtectionDecorator']
+__all__ = ['ActionProtector', 'ControllerProtector']
 
 
 class _BaseProtectionDecorator(object):
     
-    defaul_denial_handler = None
+    default_denial_handler = None
     
     def __init__(self, predicate, denial_handler=None):
         """
         Make :mod:`repoze.what` verify that the predicate is met.
         
-        :param action: The controller action to be protected.
         :param predicate: A :mod:`repoze.what` predicate.
         :param denial_handler: The callable to be run if authorization is
-            denied.
-        :raise HTTPUnauthorized: If authorization is denied and the current 
-            user is anonymous (HTTP status code 401).
-        :raise HTTPForbidden: If authorization is denied and the current user 
-            is authenticated (HTTP status code 403).
-        :return: The decorator that checks authorization.
+            denied (overrides :attr:`default_denial_handler` if defined).
         
-        If called, ``denial_handler`` will be passed a positional argument which
-        represents a message on why authorization was denied.
+        If called, ``denial_handler`` will be passed a positional argument 
+        which represents a message on why authorization was denied.
         
         """
         self.predicate = predicate
-        self.denial_handler = denial_handler or self.defaul_denial_handler
+        self.denial_handler = denial_handler or self.default_denial_handler
 
 
-class ActionProtectionDecorator(_BaseProtectionDecorator):
+class ActionProtector(_BaseProtectionDecorator):
     """
-    Decorator to set predicate checkers in Pylons/TG2 controller actions.
+    Function decorator to set predicate checkers in Pylons/TG2 controller
+    actions.
+    
+    When authorization is denied, :func:`pylons.controllers.util.abort` will
+    be called with the 401 or 403 HTTP status code if the current user is
+    anonymous or authenticated, respectively.
+    
+    It's worth noting that when the status code for the response is 401,
+    that will trigger a :mod:`repoze.who` challenger (e.g., a login form will
+    be displayed).
+    
+    .. attribute:: default_denial_handler = None
+    
+        :type: callable
+        
+        The default denial handler.
     
     """
     
     def __call__(self, func):
+        """
+        Return the decorator that will verify authorization when ``func`` is
+        run.
+        
+        """
         
         def check(*args, **kwargs):
             try:
@@ -83,15 +97,42 @@ class ActionProtectionDecorator(_BaseProtectionDecorator):
         return check
 
 
-class ControllerProtectionDecorator(_BaseProtectionDecorator):
+class ControllerProtector(_BaseProtectionDecorator):
     """
-    Decorator to set predicate checkers in Pylons/TG2 controllers.
+    Class decorator to set predicate checkers in Pylons/TG2 controllers.
+    
+    .. attribute:: default_denial_handler = None
+    
+        :type: callable or str
+        
+        The default denial handler to be passed to :attr:`protector`.
+        
+        When it's set as a string, the resulting handler will be the attribute
+        of the controller class whose name is represented by
+        ``default_denial_handler``. For example, if ``default_denial_handler``
+        equals ``"process_errors"`` and the decorated controller is
+        ``NiceController``, the resulting denial handler will be:
+        ``NiceController.process_errors``.
+    
+    .. attribute:: protector = ActionProtector
+    
+        :type: Subclass of :class:`ActionProtector`
+        
+        The action protection decorator to be added to 
+        ``Controller.__before__``.
+    
     
     """
     
-    protector = ActionProtectionDecorator
+    protector = ActionProtector
     
     def __call__(self, cls):
+        """
+        Add the :attr:`protector` decorator to the ``__before__`` method of the
+        ``cls`` controller class.
+        
+        """
+        
         if callable(self.denial_handler) or self.denial_handler is None:
             denial_handler = self.denial_handler
         else:

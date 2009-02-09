@@ -17,10 +17,10 @@
 
 from pylons import response
 
-from repoze.what.plugins.pylonshq import ActionProtectionDecorator
+from repoze.what.plugins.pylonshq import ActionProtector
 
 
-class special_require(ActionProtectionDecorator):
-    def defaul_denial_handler(self, reason):
+class special_require(ActionProtector):
+    def default_denial_handler(self, reason):
         response.status = 200
         return "You know you can't access this section; why make a try then?"

@@ -23,8 +23,8 @@ from tg.decorators import expose
 
 from repoze.what.predicates import All, Not, not_anonymous, is_user, in_group
 
-from repoze.what.plugins.pylonshq import ActionProtectionDecorator as require
-from repoze.what.plugins.pylonshq import ControllerProtectionDecorator
+from repoze.what.plugins.pylonshq import ActionProtector as require, \
+                                         ControllerProtector
 
 from tests.fixture import special_require
 
@@ -41,7 +41,6 @@ class SubController1(TGController):
         return 'in group'
 
 
-@ControllerProtectionDecorator(in_group('admins'))
 class SecurePanel(TGController):
     """Mock TG2 secure controller"""
     
@@ -53,6 +52,7 @@ class SecurePanel(TGController):
     @require(in_group('developers'))
     def commit(self):
         return 'you can commit'
+SecurePanel = ControllerProtector(in_group('admins'))(SecurePanel)
 
 
 class SecurePanelWithHandler(TGController):
@@ -66,7 +66,7 @@ class SecurePanelWithHandler(TGController):
     def sorry(reason):
         response.status = 200
         return 'what are you doing here? %s' % reason
-SecurePanelWithHandler = ControllerProtectionDecorator(
+SecurePanelWithHandler = ControllerProtector(
     in_group('admins'), 'sorry')(SecurePanelWithHandler)
 
 class BasicTGController(TGController):

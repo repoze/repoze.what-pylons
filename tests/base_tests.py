@@ -65,7 +65,7 @@ class TestWSGIController(TestCase):
 
 
 class ActionDecoratorTestCase(object):
-    """Test case for @ActionProtectionDecorator decorator"""
+    """Test case for @ActionProtector decorator"""
     
     def test_authorization_granted_to_anonymous_user(self):
         resp = self.app.get('/', status=200)
@@ -114,7 +114,7 @@ class ActionDecoratorTestCase(object):
 
 
 class ControllerDecoratorTestCase(object):
-    """Test case for @ControllerProtectionDecorator decorator"""
+    """Test case for @ControllerProtector decorator"""
     
     def test_controller_wide_authorization_granted(self):
         resp = self.app.get('/login_handler?login=rms&password=freedom')
@@ -128,7 +128,7 @@ class ControllerDecoratorTestCase(object):
 
 
 class ControllerDecoratorWithHandlerTestCase(object):
-    """Test case for @ControllerProtectionDecorator decorator with a handler"""
+    """Test case for @ControllerProtector decorator with a handler"""
     
     def test_controller_wide_authorization_denied(self):
         resp = self.app.get('/', status=200)

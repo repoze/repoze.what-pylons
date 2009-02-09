@@ -1,20 +1,22 @@
-******************************************
-:mod:`repoze.what.plugins.pylons` releases
-******************************************
+*******************************
+**repoze.what-pylons** releases
+*******************************
 
-This document describes the releases of :mod:`repoze.what.plugins.pylons`.
+This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
 .. _1.0b1:
 
-:mod:`repoze.what.plugins.pylons` 1.0b1 (*unreleased*)
-======================================================
+**repoze.what-pylons** 1.0b1 (2009-02-09)
+=========================================
 
-This is the first release of :mod:`repoze.what.plugins.pylons` as an
+This is the first release of **repoze.what-pylons** as an
 independent project. Much of the initial functionality has been taken from
 the `TurboGears v2.0 project <http://turbogears.org/2.0/>`_.
 
-* Adapted the TurboGears' ``@require`` decorator and turned into
-  :class:`repoze.what.plugins.pylonshq.decorators.ActionProtectionDecorator`.
+* Created a decorator similar to the former TurboGears' ``@require``, but
+  improved: :class:`repoze.what.plugins.pylonshq.ActionProtector`. As of
+  TurboGears v2.0b6, its ``@require`` decorator is a subclass of this
+  decorator.
 * Introduced the class decorator for controller-wide authorization
-  :class:`repoze.what.plugins.pylonshq.decorators.ControllerProtectionDecorator`.
+  :class:`repoze.what.plugins.pylonshq.ControllerProtector`.

@@ -20,7 +20,7 @@ Utilities to use :mod:`repoze.what` v1 in a Pylons or TurboGears 2 application.
 
 # Let's make all the utilities available in this namespace:
 
-from repoze.what.plugins.pylonshq.decorators import ActionProtector, \
+from repoze.what.plugins.pylonshq.protectors import ActionProtector, \
                                                     ControllerProtector
 
 

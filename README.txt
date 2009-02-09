@@ -1,14 +1,16 @@
-*********************************
-The repoze.what Quickstart plugin
-*********************************
+****************************************************
+The :mod:`repoze.what` plugin for Pylons integration
+****************************************************
 
-This is an extras plugin for repoze.what.
+This is an extras plugin for repoze.what which provides optional and handy 
+utilities for Pylons applications using this authorization framework.
 
-This plugin allows you to take advantage of a rather simple, and usual, 
-authentication and authorization setup, in which the users' data, the groups 
-and the permissions used in the application are all stored in a SQLAlchemy 
-or Elixir-managed database.
+Some of the features of the plugin include:
 
-Put simply, it configures repoze.who and repoze.what in one go so that you 
-can have an authentication and authorization system working quickly -- hence 
-the name.
+* The utilities are ready to use: There's nothing additional to be
+  configured before using.
+* 100% documented. Each component is documented along with code samples.
+* The test suite has a coverage of 100% and it will never decrease -- if
+  it ever does, report it as a bug!
+* `TurboGears 2 <http://www.turbogears.org/2.0/>`_ is officially supported
+  as well.

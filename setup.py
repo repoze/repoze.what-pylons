@@ -31,6 +31,8 @@ setup(name='repoze.what-pylons',
       classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
+        "Framework :: Pylons",
+        "Framework :: TurboGears",
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "Operating System :: OS Independent",

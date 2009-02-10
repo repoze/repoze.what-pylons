@@ -189,10 +189,10 @@ that handler by default::
     from yourapplication.anotherpackage import cool_denial_handler
     
     class CoolActionProtector(ActionProtector):
-        default_denial_handler = cool_denial_handler
+        default_denial_handler = staticmethod(cool_denial_handler)
     
     class CoolControllerProtector(ControllerProtector):
-        default_denial_handler = cool_denial_handler
+        default_denial_handler = staticmethod(cool_denial_handler)
 
 Then our controllers would look like this::
 

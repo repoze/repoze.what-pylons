@@ -1,6 +1,6 @@
-******************************************
-The **repoze.what-pylonshq** Users' Manual
-******************************************
+****************************************
+The **repoze.what-pylons** Users' Manual
+****************************************
 
 :Author: Gustavo Narea.
 :Version: |version|

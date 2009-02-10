@@ -37,7 +37,7 @@ Otherwise, authorization will be denied.
 
 .. tip::
 
-    TurboGears 2 provides the :class:`tg.decorators.require` decorator to set
+    TurboGears 2 provides the :class:`tg.require` decorator to set
     the access rules in controller actions, which is a subclass of
     :class:`ActionProtector <repoze.what.plugins.pylonshq.ActionProtector>`
     with additional functionality specific to TG2 applications.
@@ -78,8 +78,8 @@ authorization will be denied.
 
 .. tip::
 
-    TurboGears 2 provides the :class:`tg.decorators.protect` decorator for
-    controller-wide authorization, which is a subclass of
+    As of version 2.0b6, TurboGears provides the :class:`tg.protect` decorator 
+    for controller-wide authorization, which is a subclass of
     :class:`ControllerProtector <repoze.what.plugins.pylonshq.ControllerProtector>`
     with additional functionality specific to TG2 applications.
 

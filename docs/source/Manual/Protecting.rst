@@ -122,16 +122,17 @@ The following is a denial handler::
     def cool_denial_handler(reason):
         # When this handler is called, response.status has two possible values:
         # 401 or 403.
-        if response.status == 401:
-            nice_flash('Oops, you have to login: %s' % reason, 'warning')
-        elif response.status == 403:
+        if response.status.startswith('401'):
+            message = 'Oops, you have to login: %s' % reason
+            message_type = 'warning'
+        else:
             identity = request.environ['repoze.who.identity']
             userid = identity['repoze.who.userid']
             message = "Come on, %s, you know you can't do that: %s" % (userid,
                                                                        reason)
-            nice_flash(message, 'error')
-            
-        
+            message_type = 'error'
+        nice_flash(message, message_type)
+
 And you can use it as in::
 
     from repoze.what.predicates import has_permission

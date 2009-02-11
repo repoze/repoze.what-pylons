@@ -80,8 +80,9 @@ class BasicTGController(TGController):
     def index(self, **kwargs):
         return 'hello world'
     
-    @expose()
+    # In v1.0b1, if @require was before @expose then the action was not found
     @require(in_group('admins'))
+    @expose()
     def admin(self):
         return 'got to admin'
     

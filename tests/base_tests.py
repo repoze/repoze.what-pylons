@@ -69,7 +69,7 @@ class ActionDecoratorTestCase(object):
     
     def test_authorization_granted_to_anonymous_user(self):
         resp = self.app.get('/', status=200)
-        assert 'hello world' in resp.body
+        assert 'hello world' in resp.body, resp.body
     
     def test_authorization_denied_to_anonymous_user(self):
         # A little hack for Pylons; not required in TG2:
@@ -97,20 +97,20 @@ class ActionDecoratorTestCase(object):
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'leave_comment'
         resp = self.app.get('/leave_comment', status=403)
-        assert 'Trolls are banned' in resp.body
+        assert 'Trolls are banned' in resp.body, resp.body
         
     def test_authorization_denied_with_default_denial_handler(self):
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'logout'
         resp = self.app.get('/logout', status=200)
-        assert 'why make a try then?' in resp.body
+        assert 'why make a try then?' in resp.body, resp.body
         
     def test_authorization_denied_with_default_denial_handler_overriden(self):
         resp = self.app.get('/login_handler?login=sballmer&password=developers')
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'start_thread'
         resp = self.app.get('/start_thread', status=403)
-        assert 'Trolls are banned' in resp.body
+        assert 'Trolls are banned' in resp.body, resp.body
 
 
 class ControllerDecoratorTestCase(object):

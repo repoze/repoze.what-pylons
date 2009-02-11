@@ -93,7 +93,9 @@ class ActionProtector(_BaseProtectionDecorator):
                     return self.denial_handler(reason)
                 abort(code, comment=reason)
             return func(*args, **kwargs)
-        
+        # If we don't do the following, other decorators for ``func`` will get
+        # ignored:
+        check.__dict__.update(func.__dict__)
         return check
 
 

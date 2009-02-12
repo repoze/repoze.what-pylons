@@ -78,8 +78,8 @@ authorization will be denied.
 
 .. tip::
 
-    As of version 2.0b6, TurboGears provides the :class:`tg.protect` decorator 
-    for controller-wide authorization, which is a subclass of
+    As of version 2.0b6, TurboGears provides the :class:`tg.allow_only` 
+    decorator for controller-wide authorization, which is a subclass of
     :class:`ControllerProtector <repoze.what.plugins.pylonshq.ControllerProtector>`
     with additional functionality specific to TG2 applications.
 

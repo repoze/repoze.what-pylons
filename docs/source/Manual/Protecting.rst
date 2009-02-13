@@ -193,7 +193,11 @@ that handler by default::
         default_denial_handler = staticmethod(cool_denial_handler)
     
     class CoolControllerProtector(ControllerProtector):
-        default_denial_handler = staticmethod(cool_denial_handler)
+        protector = CoolActionProtector
+    
+    # The following is an alternate way to define CoolControllerProtector:
+    # class CoolControllerProtector(ControllerProtector):
+    #     default_denial_handler = staticmethod(cool_denial_handler)
 
 Then our controllers would look like this::
 

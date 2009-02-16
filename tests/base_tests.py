@@ -111,6 +111,14 @@ class ActionDecoratorTestCase(object):
         self.environ['pylons.routes_dict']['action'] = 'start_thread'
         resp = self.app.get('/start_thread', status=403)
         assert 'Trolls are banned' in resp.body, resp.body
+        
+    def test_action_signature_is_not_changed(self):
+        """@ActionProtector must not change the signature of the action"""
+        # A little hack for Pylons; not required in TG2:
+        self.environ['pylons.routes_dict']['action'] = 'get_parameter'
+        self.environ['pylons.routes_dict']['something'] = 'foo'
+        resp = self.app.get('/get_parameter/foo', status=200)
+        assert 'Parameter received: foo' in resp.body, resp.body
 
 
 class ControllerDecoratorTestCase(object):

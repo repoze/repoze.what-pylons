@@ -21,9 +21,7 @@ from pylons import response
 from pylons.controllers import WSGIController
 
 from repoze.what.predicates import All, Not, not_anonymous, is_user, in_group
-
-from repoze.what.plugins.pylonshq import ActionProtector as require, \
-                                         ControllerProtector
+from repoze.what.plugins.pylonshq import ActionProtector, ControllerProtector
 
 from tests.fixture import special_require
 
@@ -44,7 +42,7 @@ class SecurePanel(WSGIController):
     def index(self):
         return 'you are in the panel'
     
-    @require(in_group('developers'))
+    @ActionProtector(in_group('developers'))
     def commit(self):
         return 'you can commit'
 SecurePanel = ControllerProtector(in_group('admins'))(SecurePanel)
@@ -74,7 +72,7 @@ class BasicPylonsController(WSGIController):
     def index(self, **kwargs):
         return 'hello world'
     
-    @require(in_group('admins'))
+    @ActionProtector(in_group('admins'))
     def admin(self, *args, **kwargs):
         return 'got to admin'
     
@@ -82,7 +80,7 @@ class BasicPylonsController(WSGIController):
         # Let's ignore the reason
         return 'Trolls are banned'
     
-    @require(All(not_anonymous(), Not(is_user('sballmer'))),
+    @ActionProtector(All(not_anonymous(), Not(is_user('sballmer'))),
              denial_handler=troll_detected)
     def leave_comment(self):
         return 'Comment accepted'
@@ -95,3 +93,8 @@ class BasicPylonsController(WSGIController):
                      denial_handler=troll_detected)
     def start_thread(self):
         return 'You have started a thread'
+    
+    @ActionProtector(Not(not_anonymous()))
+    def get_parameter(self, something):
+        # Checking that parameters are received
+        return 'Parameter received: %s' % something

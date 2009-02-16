@@ -5,6 +5,16 @@
 This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
+.. _1.0b3:
+
+**repoze.what-pylons** 1.0b3 (2009-02-16)
+=========================================
+
+* Now :class:`repoze.what.plugins.pylonshq.ActionProtector` is a signature
+  preserving decorator. This means that now Pylons users can have positional 
+  and named arguments in their controller actions.
+
+
 .. _1.0b2:
 
 **repoze.what-pylons** 1.0b2 (2009-02-11)

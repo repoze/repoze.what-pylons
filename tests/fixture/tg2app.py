@@ -22,9 +22,7 @@ from tg.controllers import TGController
 from tg.decorators import expose
 
 from repoze.what.predicates import All, Not, not_anonymous, is_user, in_group
-
-from repoze.what.plugins.pylonshq import ActionProtector as require, \
-                                         ControllerProtector
+from repoze.what.plugins.pylonshq import ActionProtector, ControllerProtector
 
 from tests.fixture import special_require
 
@@ -49,7 +47,7 @@ class SecurePanel(TGController):
         return 'you are in the panel'
     
     @expose()
-    @require(in_group('developers'))
+    @ActionProtector(in_group('developers'))
     def commit(self):
         return 'you can commit'
 SecurePanel = ControllerProtector(in_group('admins'))(SecurePanel)
@@ -80,8 +78,9 @@ class BasicTGController(TGController):
     def index(self, **kwargs):
         return 'hello world'
     
-    # In v1.0b1, if @require was before @expose then the action was not found
-    @require(in_group('admins'))
+    # In v1.0b1, if @ActionProtector was before @expose then the action was not
+    # found
+    @ActionProtector(in_group('admins'))
     @expose()
     def admin(self):
         return 'got to admin'
@@ -91,8 +90,8 @@ class BasicTGController(TGController):
         return 'Trolls are banned'
     
     @expose()
-    @require(All(not_anonymous(), Not(is_user('sballmer'))),
-             denial_handler=troll_detected)
+    @ActionProtector(All(not_anonymous(), Not(is_user('sballmer'))),
+                     denial_handler=troll_detected)
     def leave_comment(self):
         return 'Comment accepted'
     
@@ -106,3 +105,9 @@ class BasicTGController(TGController):
                      denial_handler=troll_detected)
     def start_thread(self):
         return 'You have started a thread'
+    
+    @expose()
+    @ActionProtector(Not(not_anonymous()))
+    def get_parameter(self, something):
+        # Checking that parameters are received
+        return 'Parameter received: %s' % something

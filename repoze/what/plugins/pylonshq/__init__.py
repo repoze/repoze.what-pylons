@@ -20,8 +20,12 @@ Utilities to use :mod:`repoze.what` v1 in a Pylons or TurboGears 2 application.
 
 # Let's make all the utilities available in this namespace:
 
+from repoze.what.plugins.pylonshq.utils import booleanize_predicates, \
+                                               debooleanize_predicates
+
 from repoze.what.plugins.pylonshq.protectors import ActionProtector, \
                                                     ControllerProtector
 
 
-__all__ = ['ActionProtector', 'ControllerProtector']
+__all__ = ['ActionProtector', 'ControllerProtector', 'booleanize_predicates',
+           'debooleanize_predicates']

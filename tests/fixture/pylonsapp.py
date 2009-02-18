@@ -98,3 +98,7 @@ class BasicPylonsController(WSGIController):
     def get_parameter(self, something):
         # Checking that parameters are received
         return 'Parameter received: %s' % something
+    
+    def boolean_predicate(self):
+        p = not_anonymous()
+        return 'The predicate is %s' % bool(p)

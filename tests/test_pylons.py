@@ -22,7 +22,7 @@ from tests.fixture.pylonsapp import BasicPylonsController, SecurePanel, \
 
 from base_tests import ActionDecoratorTestCase, ControllerDecoratorTestCase, \
                        ControllerDecoratorWithHandlerTestCase, \
-                       TestWSGIController
+                       TestWSGIController, TestBooleanizer
 
 
 class BasePylonsTester(TestWSGIController):
@@ -45,3 +45,11 @@ class TestControllerDecoratorWithHandlerInPylons(
     ControllerDecoratorWithHandlerTestCase, BasePylonsTester):
     """Test case for @ControllerDecoratorTestCase decorator with handler"""
     controller = SecurePanelWithHandler
+
+
+class TestBooleanizerInPylons(TestBooleanizer, BasePylonsTester):
+    """Test case for the predicate booleanizer"""
+    
+    def tearDown(self):
+        TestBooleanizer.tearDown(self)
+        BasePylonsTester.tearDown(self)

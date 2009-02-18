@@ -5,6 +5,18 @@
 This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
+.. _1.0rc1:
+
+**repoze.what-pylons** 1.0rc1 (2009-02-18)
+==========================================
+
+* Now :mod:`repoze.what` predicates can be evaluated without passing the
+  ``environ`` explicitly, thanks to 
+  :func:`repoze.what.plugins.pylonshq.booleanize_predicates`. This *magical*
+  functionality can be disabled with
+  :func:`repoze.what.plugins.pylonshq.debooleanize_predicates`.
+
+
 .. _1.0b3:
 
 **repoze.what-pylons** 1.0b3 (2009-02-16)

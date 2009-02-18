@@ -25,6 +25,10 @@ import pylons
 from pylons import tmpl_context
 from pylons.util import ContextObj, PylonsContext
 
+from repoze.what.predicates import Predicate
+from repoze.what.plugins.pylonshq.utils import booleanize_predicates, \
+                                               debooleanize_predicates
+
 from tests.base_app import make_app, session_dir
 
 # Just in case...
@@ -62,6 +66,9 @@ class TestWSGIController(TestCase):
             'repoze.who.identity': {'repoze.who.userid': userid}
             }
         return environ
+
+
+#{ Test suite for the protectors
 
 
 class ActionDecoratorTestCase(object):
@@ -141,3 +148,43 @@ class ControllerDecoratorWithHandlerTestCase(object):
     def test_controller_wide_authorization_denied(self):
         resp = self.app.get('/', status=200)
         assert 'you are in the panel with handler' in resp.body, resp.body
+
+
+#{ Test suite for the miscellaneous utilities
+
+
+class TestBooleanizer(object):
+    """Test case for the predicate booleanizer"""
+    
+    def tearDown(self):
+        if hasattr(Predicate, '__nonzero__'):
+            del Predicate.__nonzero__
+    
+    def test_its_attribute(self):
+        assert not hasattr(Predicate, '__nonzero__')
+        # After booleanizing it:
+        booleanize_predicates()
+        assert hasattr(Predicate, '__nonzero__')
+        # After debooleanizing it:
+        debooleanize_predicates()
+        assert not hasattr(Predicate, '__nonzero__')
+    
+    def test_it(self):
+        self.environ['pylons.routes_dict']['action'] = 'boolean_predicate'
+        # Before booleanizing it, it's always true:
+        resp = self.app.get('/boolean_predicate')
+        assert 'The predicate is True' == resp.body, resp.body
+        # ===== After booleanizing it:
+        booleanize_predicates()
+        # As anonymous
+        resp = self.app.get('/boolean_predicate')
+        assert 'The predicate is False' == resp.body, resp.body
+        # As authenticated
+        self.app.get('/login_handler?login=rms&password=freedom')
+        resp = self.app.get('/boolean_predicate')
+        assert 'The predicate is True' == resp.body, resp.body
+        # ===== After debooleanizing it:
+        debooleanize_predicates()
+        self.app.get('/logout_handler')
+        resp = self.app.get('/boolean_predicate')
+        assert 'The predicate is True' == resp.body, resp.body

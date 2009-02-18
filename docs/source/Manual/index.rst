@@ -11,3 +11,4 @@ The **repoze.what-pylons** Users' Manual
 
     GettingStarted
     Protecting
+    Misc

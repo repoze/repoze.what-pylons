@@ -7,7 +7,7 @@ This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 .. _1.0rc1:
 
-**repoze.what-pylons** 1.0rc1 (2009-02-18)
+**repoze.what-pylons** 1.0rc1 (2009-02-19)
 ==========================================
 
 * Now :mod:`repoze.what` predicates can be evaluated without passing the

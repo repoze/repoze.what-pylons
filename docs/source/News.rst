@@ -5,6 +5,15 @@
 This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
+.. _1.0rc2:
+
+**repoze.what-pylons** 1.0rc2 (2009-02-20)
+==========================================
+
+* This plugin requires ``decorator`` v3.0 or better, but no minimum version
+  was required. Reported by Binet Bruno.
+
+
 .. _1.0rc1:
 
 **repoze.what-pylons** 1.0rc1 (2009-02-19)

@@ -61,7 +61,7 @@ setup(name='repoze.what-pylons',
       install_requires=[
           'repoze.what >= 1.0.4',
           'Pylons >= 0.9.7rc4',
-          'decorator',
+          'decorator >= 3.0',
           ],
       test_suite='nose.collector',
       entry_points = """\

@@ -60,12 +60,6 @@ class TestWSGIController(TestCase):
         tmpl_context._pop_object()
         # Removing the session dir:
         shutil.rmtree(session_dir, ignore_errors=True)
-    
-    def make_environ(self, userid):
-        environ = {
-            'repoze.who.identity': {'repoze.who.userid': userid}
-            }
-        return environ
 
 
 #{ Test suite for the protectors
@@ -94,10 +88,10 @@ class ActionDecoratorTestCase(object):
         assert 'got to admin' in resp.body, resp.body
         
     def test_authorization_denied_to_authenticated_user(self):
+        resp = self.app.get('/login_handler?login=linus&password=linux')
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'admin'
-        environ = self.make_environ('linus')
-        self.app.get('/admin', extra_environ=environ, status=403)
+        self.app.get('/admin', status=403)
         
     def test_authorization_denied_with_custom_denial_handler(self):
         resp = self.app.get('/login_handler?login=sballmer&password=developers')

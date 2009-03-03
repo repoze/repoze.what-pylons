@@ -24,7 +24,6 @@ from beaker.middleware import CacheMiddleware, SessionMiddleware
 
 from pylons.testutil import ControllerWrap, SetupCacheGlobal
 
-from repoze.who.plugins.form import RedirectingFormPlugin
 from repoze.who.plugins.auth_tkt import AuthTktCookiePlugin
 from repoze.what.middleware import setup_auth
 from repoze.what.adapters import BaseSourceAdapter
@@ -57,39 +56,16 @@ def make_app(controller_klass, environ={}):
     # Setting up repoze.who:
     cookie = AuthTktCookiePlugin('secret', 'authtkt')
     
-    form = RedirectingFormPlugin('/login', '/login_handler',
-                                 '/logout_handler',
-                                 rememberer_name='cookie')
-    
-    identifiers = [('main_identifier', form), ('cookie', cookie)]
-    challengers = [('form', form)]
-    authenticators = (('auth', FakeAuthenticator()), )
+    identifiers = [('cookie', cookie)]
     app = setup_auth(app, groups_adapters, permissions_adapters, 
-                     identifiers=identifiers, authenticators=authenticators,
-                     challengers=challengers)
+                     identifiers=identifiers, authenticators=[],
+                     challengers=[], skip_authentication=True)
 
     app = httpexceptions.make_middleware(app)
     return TestApp(app)
 
 
 #{ Mock definitions
-
-
-class FakeAuthenticator(object):
-    """Fake repoze.who authenticator plugin"""
-    credentials = {
-        u'rms': u'freedom',
-        u'linus': u'linux',
-        u'sballmer': u'developers',
-        u'guido': u'pythonic',
-        u'rasmus': u'php'
-        }
-
-    def authenticate(self, environ, identity):
-        login = identity['login']
-        pass_ = identity['password']
-        if login in self.credentials and pass_ == self.credentials[login]:
-            return login
 
 
 class FakeGroupSourceAdapter(BaseSourceAdapter):

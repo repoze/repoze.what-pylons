@@ -75,29 +75,27 @@ class ActionDecoratorTestCase(object):
     def test_authorization_denied_to_anonymous_user(self):
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'admin'
-        resp = self.app.get('/admin', status=302)
-        expected_location = 'http://localhost/login?came_from=' \
-                            'http%3A%2F%2Flocalhost%2Fadmin'
-        assert resp.location == expected_location
+        self.app.get('/admin', status=401)
     
     def test_authorization_granted_to_authenticated_user(self):
-        resp = self.app.get('/login_handler?login=rms&password=freedom')
+        environ = {'REMOTE_USER': 'rms'}
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'admin'
-        resp = self.app.get('/admin')
+        resp = self.app.get('/admin', extra_environ=environ, status=200)
         assert 'got to admin' in resp.body, resp.body
         
     def test_authorization_denied_to_authenticated_user(self):
-        resp = self.app.get('/login_handler?login=linus&password=linux')
+        environ = {'REMOTE_USER': 'linus'}
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'admin'
-        self.app.get('/admin', status=403)
+        self.app.get('/admin', extra_environ=environ, status=403)
         
     def test_authorization_denied_with_custom_denial_handler(self):
-        resp = self.app.get('/login_handler?login=sballmer&password=developers')
+        environ = {'REMOTE_USER': 'sballmer'}
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'leave_comment'
-        resp = self.app.get('/leave_comment', status=403)
+        resp = self.app.get('/leave_comment', extra_environ=environ,
+                            status=403)
         assert 'Trolls are banned' in resp.body, resp.body
         
     def test_authorization_denied_with_default_denial_handler(self):
@@ -107,10 +105,10 @@ class ActionDecoratorTestCase(object):
         assert 'why make a try then?' in resp.body, resp.body
         
     def test_authorization_denied_with_default_denial_handler_overriden(self):
-        resp = self.app.get('/login_handler?login=sballmer&password=developers')
+        environ = {'REMOTE_USER': 'sballmer'}
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'start_thread'
-        resp = self.app.get('/start_thread', status=403)
+        resp = self.app.get('/start_thread', extra_environ=environ, status=403)
         assert 'Trolls are banned' in resp.body, resp.body
         
     def test_action_signature_is_not_changed(self):
@@ -126,14 +124,14 @@ class ControllerDecoratorTestCase(object):
     """Test case for @ControllerProtector decorator"""
     
     def test_controller_wide_authorization_granted(self):
-        resp = self.app.get('/login_handler?login=rms&password=freedom')
-        resp = self.app.get('/', status=200)
+        environ = {'REMOTE_USER': 'rms'}
+        resp = self.app.get('/', extra_environ=environ, status=200)
         assert 'you are in the panel' in resp.body, resp.body
     
     def test_controller_wide_authorization_denied(self):
         # A little hack for Pylons; not required in TG2:
         self.environ['pylons.routes_dict']['action'] = 'commit'
-        resp = self.app.get('/commit', status=302)
+        self.app.get('/commit', status=401)
 
 
 class ControllerDecoratorWithHandlerTestCase(object):
@@ -174,11 +172,10 @@ class TestBooleanizer(object):
         resp = self.app.get('/boolean_predicate')
         assert 'The predicate is False' == resp.body, resp.body
         # As authenticated
-        self.app.get('/login_handler?login=rms&password=freedom')
-        resp = self.app.get('/boolean_predicate')
+        environ = {'REMOTE_USER': 'rms'}
+        resp = self.app.get('/boolean_predicate', extra_environ=environ)
         assert 'The predicate is True' == resp.body, resp.body
         # ===== After debooleanizing it:
         debooleanize_predicates()
-        self.app.get('/logout_handler')
         resp = self.app.get('/boolean_predicate')
         assert 'The predicate is True' == resp.body, resp.body

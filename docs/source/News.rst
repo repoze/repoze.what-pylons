@@ -5,6 +5,14 @@
 This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
+.. _1.0rc3:
+
+**repoze.what-pylons** 1.0rc3 (*unreleased*)
+============================================
+
+* Functional test suite ported to **repoze.who-testutil** to ease maintenance.
+
+
 .. _1.0rc2:
 
 **repoze.what-pylons** 1.0rc2 (2009-02-20)

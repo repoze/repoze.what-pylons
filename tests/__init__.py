@@ -26,7 +26,7 @@ from repoze.what.plugins.pylonshq import ControllerProtector
 
 
 class TestControllerDecorator(TestCase):
-    """Test case for @ControllerProtector decorator with a handler"""
+    """Framework-independent tests for @ControllerProtector decorator"""
     
     def test__before__is_defined_as_instance_method(self):
         """The ``__before__`` method must be defined as an instance method"""

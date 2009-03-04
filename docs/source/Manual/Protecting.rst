@@ -115,6 +115,7 @@ The following is a denial handler::
     # This is yourapplication.anotherpackage
     
     from pylons import request, response
+    from pylons.controllers.util import abort
     # nice_flash is a function that inserts a user-visible message in the
     # template
     from yourapplication.somepackage import nice_flash
@@ -122,7 +123,7 @@ The following is a denial handler::
     def cool_denial_handler(reason):
         # When this handler is called, response.status has two possible values:
         # 401 or 403.
-        if response.status.startswith('401'):
+        if response.status_int == 401:
             message = 'Oops, you have to login: %s' % reason
             message_type = 'warning'
         else:
@@ -132,6 +133,13 @@ The following is a denial handler::
                                                                        reason)
             message_type = 'error'
         nice_flash(message, message_type)
+        abort(response.status_int, comment=reason)
+
+.. attention::
+    The denial handler above **must** call ``abort()``, otherwise we'd be 
+    granting access to the request denied by :mod:`repoze.what`. Note that this 
+    is a feature, not a bug: In some situations you may not want to abort 
+    (e.g., you may want to redirect).
 
 And you can use it as in::
 

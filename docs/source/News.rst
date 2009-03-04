@@ -11,6 +11,7 @@ This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 ============================================
 
 * Functional test suite ported to **repoze.who-testutil** to ease maintenance.
+* Documentation enhancements.
 
 
 .. _1.0rc2:

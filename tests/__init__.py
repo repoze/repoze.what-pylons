@@ -28,11 +28,25 @@ from repoze.what.plugins.pylonshq import ControllerProtector
 class TestControllerDecorator(TestCase):
     """Framework-independent tests for @ControllerProtector decorator"""
     
-    def test__before__is_defined_as_instance_method(self):
-        """The ``__before__`` method must be defined as an instance method"""
-        # Creating a fake decorated controller
+    def test_controller_class(self):
+        """The ``__before__`` method must be defined if passed a class"""
+        # Creating a fake controller:
         class DaController(object): pass
         DaController = ControllerProtector(None)(DaController)
         # Testing it:
         assert hasattr(DaController, '__before__')
         assert ismethod(DaController.__before__)
+    
+    def test_controller_instance(self):
+        """
+        The ``__before__`` method must be defined if passed a class
+        instance.
+        
+        """
+        # Creating a fake controller:
+        class DaController(object): pass
+        da_instance = DaController()
+        da_instance = ControllerProtector(None)(da_instance)
+        # Testing it:
+        assert hasattr(da_instance, '__before__')
+        assert ismethod(da_instance.__before__)

@@ -150,26 +150,29 @@ class ControllerProtector(_BaseProtectionDecorator):
     def __call__(self, cls):
         """
         Add the :attr:`protector` decorator to the ``__before__`` method of the
-        ``cls`` controller class.
+        ``cls`` controller.
         
         """
         if inspect.isclass(cls):
             return self.decorate_class(cls)
         else:
             return self.decorate_instance(cls)
-
+    
     
     def decorate_instance(self, obj):
+        """Decorate the ``__before__`` method of a class instance."""
         cls = obj.__class__
         new_before = self.make_wrapped_method(cls)
         obj.__before__ = new.instancemethod(new_before, obj, cls)
         return obj
 
     def decorate_class(self, cls):
+        """Decorate the ``__before__`` method of a class."""
         cls.__before__ = self.make_wrapped_method(cls)
         return cls
         
     def make_wrapped_method(self, cls):
+        """Decorate the ``__before__`` method with the defined protector"""
         if callable(self.denial_handler) or self.denial_handler is None:
             denial_handler = self.denial_handler
         else:

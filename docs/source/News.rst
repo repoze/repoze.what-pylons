@@ -7,9 +7,11 @@ This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 .. _1.0rc3:
 
-**repoze.what-pylons** 1.0rc3 (*unreleased*)
-============================================
+**repoze.what-pylons** 1.0rc3 (2009-03-04)
+==========================================
 
+* :class:`repoze.what.plugins.pylonshq.ControllerProtector` didn't support
+  class instances. Fixed thanks to Alberto Valverde and Christopher Perkins!
 * Functional test suite ported to **repoze.who-testutil** to ease maintenance.
 * Documentation enhancements.
 

@@ -22,6 +22,8 @@ All these utilities are also available in the
 
 """
 
+import inspect
+import new
 from decorator import decorator
 
 from pylons import request, response
@@ -151,7 +153,23 @@ class ControllerProtector(_BaseProtectionDecorator):
         ``cls`` controller class.
         
         """
+        if inspect.isclass(cls):
+            return self.decorate_class(cls)
+        else:
+            return self.decorate_instance(cls)
+
+    
+    def decorate_instance(self, obj):
+        cls = obj.__class__
+        new_before = self.make_wrapped_method(cls)
+        obj.__before__ = new.instancemethod(new_before, obj, cls)
+        return obj
+
+    def decorate_class(self, cls):
+        cls.__before__ = self.make_wrapped_method(cls)
+        return cls
         
+    def make_wrapped_method(self, cls):
         if callable(self.denial_handler) or self.denial_handler is None:
             denial_handler = self.denial_handler
         else:
@@ -164,6 +182,4 @@ class ControllerProtector(_BaseProtectionDecorator):
             old_before.__name__ = '__before__'
         
         protector = self.protector(self.predicate, denial_handler)
-        cls.__before__ = protector(old_before)
-        
-        return cls
+        return protector(old_before)

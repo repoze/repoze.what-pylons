@@ -50,7 +50,6 @@ class TestWSGIController(TestCase):
             'pylons.routes_dict': dict(action='index'),
             'paste.config': dict(global_conf=dict(debug=True)),
             'pylons.pylons': py_obj,
-            #'repoze.who.identity': {}
             }
         pylons.c._push_object(c)
         # Finally, the app:

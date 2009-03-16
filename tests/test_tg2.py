@@ -22,7 +22,7 @@ from tests.fixture.tg2app import BasicTGController, SecurePanel, \
 
 from base_tests import ActionDecoratorTestCase, ControllerDecoratorTestCase, \
                        ControllerDecoratorWithHandlerTestCase, \
-                       TestWSGIController, TestBooleanizer
+                       TestWSGIController, EvaluatorsTestCase, TestBooleanizer
 
 
 class BaseTG2Tester(TestWSGIController):
@@ -44,6 +44,11 @@ class TestControllerDecoratorWithHandlerInTG2(
     ControllerDecoratorWithHandlerTestCase, BaseTG2Tester):
     """Test case for @ControllerDecoratorTestCase decorator"""
     controller = SecurePanelWithHandler
+
+
+class TestEvaluatorsInTG2(EvaluatorsTestCase, BaseTG2Tester):
+    """Test case for predicate evaluators"""
+    pass
 
 
 class TestBooleanizerInTG2(TestBooleanizer, BaseTG2Tester):

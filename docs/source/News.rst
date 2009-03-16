@@ -5,6 +5,17 @@
 This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
+.. _1.0rc4:
+
+**repoze.what-pylons** 1.0rc4 (2009-03-16)
+==========================================
+
+* Added a couple of trivial functions:
+  :func:`is_met <repoze.what.plugins.pylonshq.is_met>` and
+  :func:`not_met <repoze.what.plugins.pylonshq.not_met>`.
+* Added warnings on why "predicate booleanizers" should be avoided by all means.
+
+
 .. _1.0rc3:
 
 **repoze.what-pylons** 1.0rc3 (2009-03-04)

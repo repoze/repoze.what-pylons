@@ -22,7 +22,8 @@ from tg.controllers import TGController
 from tg.decorators import expose
 
 from repoze.what.predicates import All, Not, not_anonymous, is_user, in_group
-from repoze.what.plugins.pylonshq import ActionProtector, ControllerProtector
+from repoze.what.plugins.pylonshq import ActionProtector, ControllerProtector,\
+                                         is_met, not_met
 
 from tests.fixture import special_require
 
@@ -116,3 +117,15 @@ class BasicTGController(TGController):
     def boolean_predicate(self):
         p = not_anonymous()
         return 'The predicate is %s' % bool(p)
+    
+    @expose()
+    def is_met_util(self):
+        if is_met(not_anonymous()):
+            return 'You are not anonymous'
+        return 'You are anonymous'
+    
+    @expose()
+    def not_met_util(self):
+        if not_met(not_anonymous()):
+            return 'You are anonymous'
+        return 'You are not anonymous'

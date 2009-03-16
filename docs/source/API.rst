@@ -18,6 +18,10 @@ Protectors
 Miscellaneous utilities
 =======================
 
+.. autofunction:: is_met
+
+.. autofunction:: not_met
+
 .. autofunction:: booleanize_predicates
 
 .. autofunction:: debooleanize_predicates

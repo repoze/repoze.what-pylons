@@ -144,6 +144,36 @@ class ControllerDecoratorWithHandlerTestCase(object):
 #{ Test suite for the miscellaneous utilities
 
 
+class EvaluatorsTestCase(object):
+    """Tests for the is_met() and not_met() evaluators"""
+    
+    def test_is_met_when_its_met(self):
+        # A little hack for Pylons; not required in TG2:
+        self.environ['pylons.routes_dict']['action'] = 'is_met_util'
+        resp = self.app.get('/is_met_util', status=200)
+        self.assertEqual("You are anonymous", resp.body)
+    
+    def test_is_met_when_it_isnt_met(self):
+        environ = {'REMOTE_USER': 'rms'}
+        # A little hack for Pylons; not required in TG2:
+        self.environ['pylons.routes_dict']['action'] = 'is_met_util'
+        resp = self.app.get('/is_met_util', extra_environ=environ, status=200)
+        self.assertEqual("You are not anonymous", resp.body)
+    
+    def test_not_met_when_it_isnt_met(self):
+        # A little hack for Pylons; not required in TG2:
+        self.environ['pylons.routes_dict']['action'] = 'not_met_util'
+        resp = self.app.get('/not_met_util', status=200)
+        self.assertEqual("You are anonymous", resp.body)
+    
+    def test_not_met_when_its_met(self):
+        environ = {'REMOTE_USER': 'rms'}
+        # A little hack for Pylons; not required in TG2:
+        self.environ['pylons.routes_dict']['action'] = 'not_met_util'
+        resp = self.app.get('/not_met_util', extra_environ=environ, status=200)
+        self.assertEqual("You are not anonymous", resp.body)
+
+
 class TestBooleanizer(object):
     """Test case for the predicate booleanizer"""
     

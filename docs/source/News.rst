@@ -5,6 +5,14 @@
 This document describes the releases of :mod:`repoze.what.plugins.pylonshq`.
 
 
+.. _1.0:
+
+**repoze.what-pylons** 1.0 (2009-03-29)
+=======================================
+
+* Fixed some typos in the documentation thanks to Binet Bruno.
+
+
 .. _1.0rc4:
 
 **repoze.what-pylons** 1.0rc4 (2009-03-16)

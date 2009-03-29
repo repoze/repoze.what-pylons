@@ -14,7 +14,7 @@ Predicate evaluators
 With :func:`repoze.what.plugins.pylonshq.is_met`, you'll be able to evaluate
 your predicates without passing the WSGI environ explicitly, as in:
 
-    >>> from repoze.what.plugins.pylons import is_met
+    >>> from repoze.what.plugins.pylonshq import is_met
     >>> from repoze.what.predicates import is_user
     >>> is_met(is_user('gustavo')) # Will return True if the user is "gustavo"
     False
@@ -30,7 +30,7 @@ instead of:
 If you want to evaluate the opposite, that it's not met, you can use
 :func:`not_met <repoze.what.plugins.pylonshq.not_met>` instead:
 
-    >>> from repoze.what.plugins.pylons import not_met
+    >>> from repoze.what.plugins.pylonshq import not_met
     >>> from repoze.what.predicates import is_user
     >>> not_met(is_user('gustavo')) # Will return True if the user isn't "gustavo"
     True

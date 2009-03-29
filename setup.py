@@ -29,7 +29,7 @@ setup(name='repoze.what-pylons',
       description=('The repoze.what v1 plugin for Pylons/TG2 integration'),
       long_description=README,
       classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Pylons",
         "Framework :: TurboGears",

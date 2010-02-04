@@ -68,7 +68,7 @@ predicate checkers like boolean variables. Once you call it, you'll be able to
 evaluate your predicates without passing the environ::
 
     >>> from repoze.what.predicates import not_anonymous
-    >>> p = non_anonymous()
+    >>> p = not_anonymous()
     >>> bool(p) # Will return False if the user is anonymous; True otherwise
     False
 
@@ -76,7 +76,7 @@ instead of::
 
     >>> from pylons import request
     >>> from repoze.what.predicates import not_anonymous
-    >>> p = non_anonymous()
+    >>> p = not_anonymous()
     >>> p.is_met(request.environ) # Will return False if the user is anonymous; True otherwise
     False
 

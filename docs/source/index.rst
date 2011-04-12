@@ -39,14 +39,11 @@ Support and development
 =======================
 
 The prefered place to ask questions is the `Repoze mailing list 
-<http://lists.repoze.org/listinfo/repoze-dev>`_ or the `#repoze 
-<irc://irc.freenode.net/#repoze>`_ IRC channel. Bugs reports and feature 
-requests should be sent to `the issue tracker of the Repoze project 
-<http://bugs.repoze.org/>`_.
+<http://lists.repoze.org/listinfo/repoze-dev>`_. Some users are on the `#repoze 
+<irc://irc.freenode.net/#repoze>`_ IRC channel.
 
-The development mainline is available at the following Subversion repository::
-
-    http://svn.repoze.org/repoze.what/plugins/pylons/trunk/
+This project is hosted on `GitHub
+<https://github.com/repoze/repoze.what-pylons>`_.
 
 
 Releases

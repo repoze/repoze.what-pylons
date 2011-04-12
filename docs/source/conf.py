@@ -188,7 +188,7 @@ latex_documents = [
 #latex_use_modindex = True
 
 intersphinx_mapping = {
-    #'http://turbogears.org/2.0/docs/': None,
+    'http://turbogears.org/2.0/docs/': None,
     'http://www.pylonshq.com/docs/en/0.9.7/': None,
-    'http://static.repoze.org/whatdocs/': None,
+    'http://what.repoze.org/docs/1.0/': None,
     }
